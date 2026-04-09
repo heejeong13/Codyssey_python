@@ -1,0 +1,15 @@
+{
+    "quizzes": [
+        {
+            "question": "Python의 창시자는?",
+            "choices": ["Guido", "Linus", "Bjarne", "James"],
+            "answer": 1
+        },
+        {
+            "question": "Python의 창시자는2?",
+            "choices": ["Guido", "Linus", "Bjarne", "James"],
+            "answer": 1
+        }
+    ],
+    "best_score": 3
+}
