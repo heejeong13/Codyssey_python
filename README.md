@@ -1,2 +1,6 @@
-# Codyssey_python
-Pre-course2: Python &amp; Git Basic
+# 프로젝트 개요
+# 퀴즈 주제 선정 이유
+# 실행 방법
+# 기능 목록
+# 파일 구조
+# 데이터 파일 설명
