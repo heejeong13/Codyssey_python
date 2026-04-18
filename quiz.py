@@ -7,9 +7,9 @@ class Quiz:
         self.answer = answer
 
     def show_quiz(self):
-        print(f"\n📝 {self.question}")
+        print(f"\n{self.question}")
         for i, choice in enumerate(self.choices, 1):
-            print(f"  {i}. {choice}")
+            print(f"{i}. {choice}")
 
     def check_answer(self, input_answer):
         return input_answer == self.answer
