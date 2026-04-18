@@ -24,7 +24,7 @@ def main():
                 game.play()
             elif selectedNumber == '2':
                 """퀴즈 추가"""
-                print('2')
+                print('test_merge')
             elif selectedNumber == '3':
                 """퀴즈 목록"""
                 print('3')
