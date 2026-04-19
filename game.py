@@ -9,7 +9,7 @@ class Game:
     def __init__(self, file_path):
         self.file_path = file_path
         self.quizzes = []
-        self.best_score = None
+        self.best_score = 0
         self.load_quiz()
 
     def load_quiz(self):
@@ -44,7 +44,7 @@ class Game:
         except (IOError, OSError) as e:
             print(f"저장 중 오류 발생: {e}")
 
-    def get_default_quizzes():
+    def get_default_quizzes(self):
         return [
             Quiz(
                 question="LCK 팀 T1의 이전 팀명은?",
@@ -73,7 +73,7 @@ class Game:
             ),
         ]
     
-    def play(self):
+    def play_quiz(self):
         score = 0
         total = len(self.quizzes)
         print(f"\n총 {total}개의 퀴즈가 있습니다.")
@@ -110,4 +110,57 @@ class Game:
         print("=" * 40)
 
         self.save_data()
+
+    def add_quiz(self):
+        print("📌 새로운 퀴즈를 추가합니다.")
+        print("-" * 40)
+
+        #문제 입력
+        while True:
+            question = input("문제를 입력하세요: ").strip()
+            if not question:
+                print("문제를 입력해주세요.")
+                continue
+            break
+
+        #선택지 입력
+        choices = []
+        for i in range(1, 5):
+            while True:
+                choice = input(f"선택지 {i}번을 입력하세요: ").strip()
+                if not choice:
+                    print("선택지를 입력해주세요.")
+                    continue
+                choices.append(choice)
+                break
+        
+        while True:
+            try:
+                raw = input("정답 번호를 입력하세요 (1~4): ").strip()
+                if not raw:
+                    print("빈 입력입니다.")
+                    continue
+                answer = int(raw)
+                if answer < 1 or answer > 4:
+                    print("1~4 사이의 번호를 입력해주세요.")
+                    continue
+                break
+            except ValueError:
+                print("숫자를 입력해주세요.")
+
+        new_quiz = Quiz(question=question, choices=choices, answer=answer)
+        self.quizzes.append(new_quiz)
+        self.save_data()
+        print("✅ 퀴즈가 추가되었습니다!")
+
+    def view_quiz(self):
+        print(f"\n📋 등록된 퀴즈 목록 (총 {len(self.quizzes)}개)")
+        print("-" * 40)
+        for i, quiz in enumerate(self.quizzes, 1):
+            print(f"{i} {quiz.question}")
+        print("-" * 40)
+        
+    def view_score(self):
+        print(f" 🏆 최고 점수: {self.best_score}점 (5문제 중 4문제 정답)")
+        
 

@@ -21,13 +21,13 @@ def main():
 
             if selectedNumber == '1':
                 """퀴즈 풀기"""
-                game.play()
+                game.play_quiz()
             elif selectedNumber == '2':
                 """퀴즈 추가"""
-                print('test_merge')
+                game.add_quiz()
             elif selectedNumber == '3':
                 """퀴즈 목록"""
-                print('3')
+                game.view_quiz()
             elif selectedNumber == '4':
                 """퀴즈 확인"""
                 print('4')
