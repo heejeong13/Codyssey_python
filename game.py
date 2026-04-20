@@ -47,7 +47,7 @@ class Game:
     def load_quiz(self):
         if not os.path.exists(self.file_path):
               print("⚠️ 저장 파일이 없어 기본 퀴즈를 불러옵니다.")
-              self.quizzes = self.get_default_quizzes()
+              self.quizzes = self.initialize_quizzes()
               return
         
         try :        
@@ -58,12 +58,11 @@ class Game:
 
             if not self.quizzes:
                 print("⚠️ 저장된 퀴즈가 없어 기본 퀴즈를 불러옵니다.")
-                self.quizzes = self.get_default_quizzes()
+                self.quizzes = self.initialize_quizzes()
 
         except (json.JSONDecodeError, KeyError, TypeError) as e:
             print(f"⚠️ 파일이 손상되어 기본 퀴즈를 불러옵니다.")
-            self.quizzes = self.get_default_quizzes()
-            self.best_score = None
+            self.quizzes = self.initialize_quizzes()
 
     def save_data(self):
         data = {
@@ -76,7 +75,8 @@ class Game:
         except (IOError, OSError) as e:
             print(f"⚠️ 저장 중 오류 발생: {e}")
 
-    def get_default_quizzes(self):
+    def initialize_quizzes(self):
+        self.best_score = 0
         return [
             Quiz(
                 question="LCK 팀 T1의 이전 팀명은?",
@@ -140,7 +140,7 @@ class Game:
         while True:
             question = input("문제를 입력하세요: ").strip()
             if not question:
-                print("문제를 입력해주세요.")
+                print("⚠️ 빈 입력입니다.")
                 continue
             break
 
