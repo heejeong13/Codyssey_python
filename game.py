@@ -16,7 +16,7 @@ class Game:
         try:
             while True:
                 print("\n" + "=" * 40)
-                print("My Quiz")
+                print("🎯 나만의 퀴즈 게임 🎯")
                 print("=" * 40)
                 print("1. 퀴즈 풀기")
                 print("2. 퀴즈 추가")
@@ -28,29 +28,27 @@ class Game:
 
                 if selectedNumber == '1':
                     """퀴즈 풀기"""
-                    game.play_quiz()
+                    self.play_quiz()
                 elif selectedNumber == '2':
                     """퀴즈 추가"""
-                    game.add_quiz()
+                    self.add_quiz()
                 elif selectedNumber == '3':
                     """퀴즈 목록"""
-                    game.view_quiz()
+                    self.view_quiz()
                 elif selectedNumber == '4':
                     """점수 확인"""
-                    print('4')
+                    self.view_score()
                 elif selectedNumber == '5':
                     """퀴즈 종료"""
                     break
                 else:
                     print("⚠️ 1~5사이의 숫자를 입력하세요.\n")
-        except EOFError:
-            print("프로그램을 종료합니다.")
-        except KeyboardInterrupt:
-            print("프로그램을 종료합니다.")
+        except (EOFError, KeyboardInterrupt):
+            print("⚠️ 프로그램을 종료합니다.")
 
     def load_quiz(self):
         if not os.path.exists(self.file_path):
-              print("저장 파일이 없어 기본 퀴즈를 불러옵니다.")
+              print("⚠️ 저장 파일이 없어 기본 퀴즈를 불러옵니다.")
               self.quizzes = self.get_default_quizzes()
               return
         
@@ -61,11 +59,11 @@ class Game:
                 self.quizzes = [Quiz.from_dict(q) for q in data.get("quizzes", [])]
 
             if not self.quizzes:
-                print("저장된 퀴즈가 없어 기본 퀴즈를 불러옵니다.")
+                print("⚠️ 저장된 퀴즈가 없어 기본 퀴즈를 불러옵니다.")
                 self.quizzes = self.get_default_quizzes()
 
         except (json.JSONDecodeError, KeyError, TypeError) as e:
-            print(f"파일이 손상되어 기본 퀴즈를 불러옵니다.")
+            print(f"⚠️ 파일이 손상되어 기본 퀴즈를 불러옵니다.")
             self.quizzes = self.get_default_quizzes()
             self.best_score = None
 
@@ -78,7 +76,7 @@ class Game:
             with open(self.file_path, "w", encoding="utf-8") as f:
                 json.dump(data, f, ensure_ascii=False, indent=2)
         except (IOError, OSError) as e:
-            print(f"저장 중 오류 발생: {e}")
+            print(f"⚠️ 저장 중 오류 발생: {e}")
 
     def get_default_quizzes(self):
         return [
@@ -178,11 +176,11 @@ class Game:
                     continue
                 answer = int(raw)
                 if answer < 1 or answer > 4:
-                    print("1~4 사이의 번호를 입력해주세요.")
+                    print("⚠️1~4 사이의 번호를 입력해주세요.")
                     continue
                 break
             except ValueError:
-                print("숫자를 입력해주세요.")
+                print("⚠️ 숫자를 입력해주세요.")
 
         new_quiz = Quiz(question=question, choices=choices, answer=answer)
         self.quizzes.append(new_quiz)
@@ -198,5 +196,6 @@ class Game:
         
     def view_score(self):
         print(f" 🏆 최고 점수: {self.best_score}점 (5문제 중 4문제 정답)")
+
         
 
