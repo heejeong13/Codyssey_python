@@ -16,7 +16,7 @@ class Game:
         try:
             while True:
                 print("\n" + "=" * 40)
-                print("🎯 나만의 퀴즈 게임 🎯")
+                print("🎯 나만의 퀴즈 게임 PULL TEST🎯")
                 print("=" * 40)
                 print("1. 퀴즈 풀기")
                 print("2. 퀴즈 추가")
@@ -43,6 +43,7 @@ class Game:
                     break
         except (EOFError, KeyboardInterrupt):
             print("⚠️ 프로그램을 종료합니다.")
+            sys.exit(0)
 
     def load_quiz(self):
         if not os.path.exists(self.file_path):
