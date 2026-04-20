@@ -173,7 +173,7 @@ class Game:
         if self.best_score == None:
             print(f"⚠️ 아직 문제를 풀지 않았습니다.")
         else:
-            print(f"🏆 최고 점수: {self.best_score}점 (5문제 중 4문제 정답)")
+            print(f"🏆 최고 점수: {self.best_score}점")
 
     def validate_answer(self, comment="정답을 입력하세요", limit=4):
         answer = None
