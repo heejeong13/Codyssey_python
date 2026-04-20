@@ -24,25 +24,23 @@ class Game:
                 print("4. 점수 확인")
                 print("5. 종료")
                 print("=" * 40)
-                selectedNumber = input("번호를 선택하세요:").strip()
+                selectedNumber = self.validate_answer("번호를 입력하세요", 5)
 
-                if selectedNumber == '1':
+                if selectedNumber == 1:
                     """퀴즈 풀기"""
                     self.play_quiz()
-                elif selectedNumber == '2':
+                elif selectedNumber == 2:
                     """퀴즈 추가"""
                     self.add_quiz()
-                elif selectedNumber == '3':
+                elif selectedNumber == 3:
                     """퀴즈 목록"""
                     self.view_quiz()
-                elif selectedNumber == '4':
+                elif selectedNumber == 4:
                     """점수 확인"""
                     self.view_score()
-                elif selectedNumber == '5':
+                elif selectedNumber == 5:
                     """퀴즈 종료"""
                     break
-                else:
-                    print("⚠️ 1~5사이의 숫자를 입력하세요.\n")
         except (EOFError, KeyboardInterrupt):
             print("⚠️ 프로그램을 종료합니다.")
 
@@ -116,24 +114,13 @@ class Game:
         for i, quiz in enumerate(self.quizzes, 1):
             quiz.show_quiz()
 
-            while True:
-                try:
-                    answer = int(input("정답 입력:").strip())
-                    if not answer:
-                        print("빈 입력입니다.")
-                        continue
-                    if answer < 1 or answer > 4:
-                        print("1~4 사이의 번호를 입력해주세요.")
-                        continue
-                    break
-                except ValueError:
-                    print("숫자를 입력해주세요.")
+            answer = self.validate_answer()
 
             if quiz.check_answer(answer):
                 print("✅ 정답입니다!")
                 score += 1
             else:
-                print(f"오답입니다. 정답은 {quiz.answer}번 입니다.")
+                print(f"⚠️ 오답입니다. 정답은 {quiz.answer}번 입니다.")
 
         # 결과 출력
         print("\n" + "=" * 40)
@@ -168,19 +155,7 @@ class Game:
                 choices.append(choice)
                 break
         
-        while True:
-            try:
-                raw = input("정답 번호를 입력하세요 (1~4): ").strip()
-                if not raw:
-                    print("빈 입력입니다.")
-                    continue
-                answer = int(raw)
-                if answer < 1 or answer > 4:
-                    print("⚠️1~4 사이의 번호를 입력해주세요.")
-                    continue
-                break
-            except ValueError:
-                print("⚠️ 숫자를 입력해주세요.")
+        answer = self.validate_answer()
 
         new_quiz = Quiz(question=question, choices=choices, answer=answer)
         self.quizzes.append(new_quiz)
@@ -196,6 +171,27 @@ class Game:
         
     def view_score(self):
         print(f" 🏆 최고 점수: {self.best_score}점 (5문제 중 4문제 정답)")
+
+    def validate_answer(self, comment="정답을 입력하세요", limit=4):
+        answer = None
+        while True:
+            try:
+                #입력 앞뒤 공백 제거 후 처리한다
+                answer = input(f"{comment}(1~{limit}): ").strip()
+                #빈 입력(그냥 Enter)인 경우 안내 메시지 출력 후 재입력 흐름으로 복귀한다.
+                if not answer:
+                    print("⚠️ 빈 입력입니다.")
+                    continue
+                answer = int(answer)
+                #허용 범위 밖 숫자(예: 메뉴 9, 정답 0) 입력 시 안내 메시지 출력 후 재입력 흐름으로 복귀한다.
+                if answer < 1 or answer > limit:
+                    print(f"⚠️ 1~{limit} 사이의 번호를 입력해주세요.")
+                    continue
+                break
+            #숫자 변환 실패(예: abc) 시 안내 메시지 출력 후 재입력 흐름으로 복귀한다.
+            except ValueError:
+                print("⚠️ 숫자를 입력해주세요.")
+        return answer
 
         
 
