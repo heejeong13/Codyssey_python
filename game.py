@@ -9,7 +9,7 @@ class Game:
     def __init__(self, file_path):
         self.file_path = file_path
         self.quizzes = []
-        self.best_score = 0
+        self.best_score = None
         self.load_quiz()
     
     def run_quiz(self):
@@ -76,7 +76,7 @@ class Game:
             print(f"⚠️ 저장 중 오류 발생: {e}")
 
     def initialize_quizzes(self):
-        self.best_score = 0
+        self.best_score = None
         return [
             Quiz(
                 question="LCK 팀 T1의 이전 팀명은?",
@@ -106,7 +106,7 @@ class Game:
         ]
     
     def play_quiz(self):
-        score = 0
+        new_score = 0
         total = len(self.quizzes)
         print(f"\n총 {total}개의 퀴즈가 있습니다.")
 
@@ -118,22 +118,22 @@ class Game:
 
             if quiz.check_answer(answer):
                 print("✅ 정답입니다!")
-                score += 1
+                new_score += 1
             else:
                 print(f"⚠️ 오답입니다. 정답은 {quiz.answer}번 입니다.")
 
         # 결과 출력
         print("\n" + "=" * 40)
-        print(f"🏆 결과: {total}문제 중 {score}문제 정답! {score}점")
-        if self.best_score < score:
+        print(f"🏆 결과: {total}문제 중 {new_score}문제 정답! {new_score}점")
+        if self.best_score is None or self.best_score < new_score:
             print("🎉 새로운 최고 점수입니다!")
-            self.best_score = score
+            self.best_score = new_score
         print("=" * 40)
 
         self.save_data()
 
     def add_quiz(self):
-        print("📌 새로운 퀴즈를 추가합니다.")
+        print("\n📌 새로운 퀴즈를 추가합니다.")
         print("-" * 40)
 
         #문제 입력
@@ -170,7 +170,10 @@ class Game:
         print("-" * 40)
         
     def view_score(self):
-        print(f" 🏆 최고 점수: {self.best_score}점 (5문제 중 4문제 정답)")
+        if self.best_score == None:
+            print(f"⚠️ 아직 문제를 풀지 않았습니다.")
+        else:
+            print(f"🏆 최고 점수: {self.best_score}점 (5문제 중 4문제 정답)")
 
     def validate_answer(self, comment="정답을 입력하세요", limit=4):
         answer = None
