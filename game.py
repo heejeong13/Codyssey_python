@@ -42,8 +42,7 @@ class Game:
                     """퀴즈 종료"""
                     break
         except (EOFError, KeyboardInterrupt):
-            print("⚠️ 프로그램을 종료합니다.")
-            sys.exit(0)
+            print("\n⚠️ 프로그램을 종료합니다.")
 
     def load_quiz(self):
         if not os.path.exists(self.file_path):
